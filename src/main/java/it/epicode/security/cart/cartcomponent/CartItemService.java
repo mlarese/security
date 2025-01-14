@@ -2,6 +2,8 @@ package it.epicode.security.cart.cartcomponent;
 
 import it.epicode.security.auth.AppUser;
 import it.epicode.security.auth.AppUserService;
+import it.epicode.security.cart.product.Product;
+import it.epicode.security.cart.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -22,25 +24,29 @@ public class CartItemService {
     // delle eccezioni
 
     private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
-    public CartItem saveCartItem(CartItemInsertRequest request, String username ) {
+    public CartItemInsertResponse saveCartItem(CartItemInsertRequest request, String username ) {
         Optional<AppUser> user = appUserService.findByUsername(username);
         if(user.isEmpty()) {
             throw new EntityNotFoundException("User not found");
         }
 
-        if(!cartRepository.existsByUserName(username)) {
+        if(!cartRepository.existsByUserUsername(username)) {
             throw new EntityNotFoundException("Cart not found");
         }
-        Cart cart = cartRepository.findByUserName(username);
+        Cart cart = cartRepository.findByUserUsername(username);
 
+        Product p = productRepository.findById(request.getIdProdotto()).orElseThrow(() -> new EntityNotFoundException("Product not found"));
         CartItem cartItem = new CartItem();
         BeanUtils.copyProperties(request, cartItem);
 
         cartItem.setCart(cart);
+        cartItem.setProdotto(p);
         cart.getItems().add(cartItem);
 
-        return cartItemRepository.save(cartItem);
+        cartItemRepository.save(cartItem);
+        return cartItemRepository.findCartItemById(cartItem.getId());
     }
 
 

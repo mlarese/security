@@ -10,6 +10,8 @@ import lombok.Data;
 public class CartItemInsertRequest {
     @Min(value = 1, message = "quantity must be greater than 0")
     Long quantity;
+    @Min(value = 1, message = "price must be greater than 0")
+    Double price;
     @NotNull(message = "idProdotto is mandatory")
     Long idProdotto;
 }

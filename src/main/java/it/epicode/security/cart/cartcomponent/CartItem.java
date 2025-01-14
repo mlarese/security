@@ -13,6 +13,8 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private Long quantity;
+    private Double price;
+
     @ManyToOne
     private Product prodotto;
 

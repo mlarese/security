@@ -16,7 +16,7 @@ public class CartItemController {
     private final CartItemService cartItemService;
 
     @PostMapping
-    public ResponseEntity<CartItem> createCartItem(@RequestBody CartItemInsertRequest request, @AuthenticationPrincipal User user) {
+    public ResponseEntity<CartItemInsertResponse> createCartItem(@RequestBody CartItemInsertRequest request, @AuthenticationPrincipal User user) {
         return ResponseEntity.ok(cartItemService.saveCartItem(request, user.getUsername()));
     }
 
