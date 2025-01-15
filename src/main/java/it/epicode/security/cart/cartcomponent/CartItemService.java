@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,15 +19,16 @@ import java.util.Optional;
 public class CartItemService {
     private final CartItemRepository cartItemRepository;
     private final AppUserService appUserService;
-
-    // ho usato il repository per questione di tempo
-    // andrebbe sempre utilizzato un service che contiene già dentro di se la gestione
-    // delle eccezioni
-
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
+    private final CartItemMapper cartItemMapper;
 
-    public CartItemInsertResponse saveCartItem(CartItemInsertRequest request, String username ) {
+    public List<CartItemDto> getItems() {
+
+        return cartItemMapper.toDtoList( cartItemRepository.findAll());
+    }
+
+    public CartItemDto saveCartItem(CartItemInsertRequest request, String username ) {
         Optional<AppUser> user = appUserService.findByUsername(username);
         if(user.isEmpty()) {
             throw new EntityNotFoundException("User not found");
@@ -46,7 +48,7 @@ public class CartItemService {
         cart.getItems().add(cartItem);
 
         cartItemRepository.save(cartItem);
-        return cartItemRepository.findCartItemById(cartItem.getId());
+        return cartItemMapper.toDto(cartItem);
     }
 
 
