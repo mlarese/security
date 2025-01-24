@@ -1,6 +1,7 @@
 package it.epicode.security.autore;
 
 
+import it.epicode.security.auth.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/autori")
 @RequiredArgsConstructor
-public class AutoreController {
+public class
+AutoreController {
     private final AutoreService autoreService;
 
 
@@ -39,7 +41,9 @@ public class AutoreController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Autore>> getAutori(@ParameterObject Pageable pageable) {
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<Page<Autore>> getAutori(@AuthenticationPrincipal AppUser user, @ParameterObject Pageable pageable) {
+        System.out.println(user);
         return ResponseEntity.ok(autoreService.findAll(pageable));
     }
 

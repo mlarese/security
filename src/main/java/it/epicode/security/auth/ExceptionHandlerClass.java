@@ -1,14 +1,14 @@
-package it.epicode.security.exception;
+package it.epicode.security.auth;
 
 
+import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -34,6 +34,15 @@ public class ExceptionHandlerClass extends ResponseEntityExceptionHandler {
     }
 
 
+    @ExceptionHandler(value = AccessDeniedException.class)
+    protected ResponseEntity<String> AccessDenied(AccessDeniedException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = JwtTokenMissingException.class)
+    protected ResponseEntity<String> JwtTokenMissingException(JwtTokenMissingException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+    }
 
 
     @ExceptionHandler(ConstraintViolationException.class)
