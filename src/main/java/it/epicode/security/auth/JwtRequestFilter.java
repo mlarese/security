@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+import org.springframework.util.AntPathMatcher;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -71,13 +71,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         chain.doFilter(request, response);
     }
 
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String requestURI = request.getRequestURI();
-        return EXCLUDED_URLS.contains(requestURI);
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+        return EXCLUDED_URLS.stream().anyMatch(pattern -> antPathMatcher.match(pattern, path));
     }
 
     private static final List<String> EXCLUDED_URLS = Arrays.asList(
-            "/api/public", "/api/auth/login", "/api/auth/register"
+            "/api/public",
+            "/api/auth/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/error",
+            "/sw.js"
     );
+
+
 }
