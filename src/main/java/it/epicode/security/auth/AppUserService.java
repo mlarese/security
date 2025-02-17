@@ -38,7 +38,6 @@ public class AppUserService {
         appUser.setUsername(username);
         appUser.setPassword(passwordEncoder.encode(password));
         appUser.setRoles(roles);
-
         return appUserRepository.save(appUser);
     }
 
