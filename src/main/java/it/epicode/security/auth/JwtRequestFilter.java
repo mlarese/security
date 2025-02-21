@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,12 +47,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                System.out.println("Impossibile ottenere il token JWT");
+                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Impossibile ottenere il token JWT"));
+                request.getRequestDispatcher("/error").forward(request, response);
             } catch (ExpiredJwtException e) {
-                System.out.println("Il token JWT è scaduto");
+                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Il token JWT è scaduto"));
+                request.getRequestDispatcher("/error").forward(request, response);
+            } catch (Exception e) {
+                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Impossibile ottenere il token JWT"));
+                request.getRequestDispatcher("/error").forward(request, response);
             }
-        } else {
 
+            } else {
                 request.setAttribute("javax.servlet.error.exception", new JwtTokenMissingException("JWT Token is missing"));
                 request.getRequestDispatcher("/error").forward(request, response);
                 return;
