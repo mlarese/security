@@ -1,4 +1,4 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.configs;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

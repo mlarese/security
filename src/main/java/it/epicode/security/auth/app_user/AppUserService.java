@@ -1,5 +1,6 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.app_user;
 
+import it.epicode.security.auth.jwt.JwtTokenUtil;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

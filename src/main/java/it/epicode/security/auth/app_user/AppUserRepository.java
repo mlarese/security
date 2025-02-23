@@ -1,4 +1,4 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.app_user;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

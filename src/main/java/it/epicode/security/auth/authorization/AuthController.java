@@ -1,5 +1,7 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.authorization;
 
+import it.epicode.security.auth.app_user.Role;
+import it.epicode.security.auth.app_user.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

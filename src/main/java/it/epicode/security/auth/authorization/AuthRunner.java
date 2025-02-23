@@ -1,5 +1,8 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.authorization;
 
+import it.epicode.security.auth.app_user.Role;
+import it.epicode.security.auth.app_user.AppUser;
+import it.epicode.security.auth.app_user.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

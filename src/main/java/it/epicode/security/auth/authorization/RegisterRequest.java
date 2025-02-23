@@ -1,4 +1,4 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.authorization;
 
 import lombok.Data;
 

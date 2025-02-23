@@ -1,4 +1,4 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.app_user;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "users")
+@Table(name = "app_users")
 @NoArgsConstructor
 @Data
 public class AppUser implements UserDetails {

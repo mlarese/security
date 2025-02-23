@@ -1,7 +1,6 @@
-package it.epicode.security.auth;
+package it.epicode.security.auth.exception;
 
 
-import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
