@@ -44,26 +44,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // Estrae il token JWT dal header Authorization
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
-            try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
-                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Impossibile ottenere il token JWT"));
-                request.getRequestDispatcher("/error").forward(request, response);
-            } catch (ExpiredJwtException e) {
-                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Il token JWT è scaduto"));
-                request.getRequestDispatcher("/error").forward(request, response);
-            } catch (Exception e) {
-                request.setAttribute("javax.servlet.error.exception", new AccessDeniedException("Impossibile ottenere il token JWT"));
-                request.getRequestDispatcher("/error").forward(request, response);
-            }
-
-            } else {
-                request.setAttribute("javax.servlet.error.exception", new JwtTokenMissingException("JWT Token is missing"));
-                request.getRequestDispatcher("/error").forward(request, response);
-                return;
+            try { username = jwtTokenUtil.getUsernameFromToken(jwtToken);  } catch (Exception e) { }
         }
 
-        // Valida il token e configura l'autenticazione nel contesto di sicurezza
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
 
@@ -76,23 +59,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
-
-    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getRequestURI().substring(request.getContextPath().length());
-        return EXCLUDED_URLS.stream().anyMatch(pattern -> antPathMatcher.match(pattern, path));
-    }
-
-    private static final List<String> EXCLUDED_URLS = Arrays.asList(
-            "/api/public",
-            "/api/auth/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/error",
-            "/sw.js"
-    );
 
 
 }

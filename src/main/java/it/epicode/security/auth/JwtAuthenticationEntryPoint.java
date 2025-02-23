@@ -15,7 +15,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        // Restituisce un errore 401 non autorizzato
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Accesso non autorizzato");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Accesso non autorizzato: " + authException.getMessage());
     }
 }
