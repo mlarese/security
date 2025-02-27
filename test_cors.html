@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login</title>
+</head>
+<body>
+<h2>Login Test</h2>
+<button onclick="fetchLogin()">Login</button>
+<pre id="output"></pre>
+
+<script>
+    async function fetchLogin() {
+        try {
+            const response = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: "user",
+                    password: "userpwd"
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+            document.getElementById("output").textContent = `Error: ${error.message}`;
+        }
+    }
+</script>
+</body>
+</html>

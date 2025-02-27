@@ -1,5 +1,6 @@
 package it.epicode.security.auth.app_user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class AppUser implements UserDetails {
 
     @Column(nullable = false)
     @ToString.Exclude
+    @JsonIgnore
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
