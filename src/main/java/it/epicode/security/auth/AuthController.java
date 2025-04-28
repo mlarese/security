@@ -1,8 +1,5 @@
-package it.epicode.security.auth.authorization;
+package it.epicode.security.auth;
 
-import it.epicode.security.auth.app_user.AppUser;
-import it.epicode.security.auth.app_user.Role;
-import it.epicode.security.auth.app_user.AppUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

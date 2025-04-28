@@ -1,6 +1,5 @@
-package it.epicode.security.auth.jwt;
+package it.epicode.security.auth;
 
-import it.epicode.security.auth.configs.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

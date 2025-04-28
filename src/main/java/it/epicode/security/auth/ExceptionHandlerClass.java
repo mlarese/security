@@ -1,4 +1,4 @@
-package it.epicode.security.auth.exception;
+package it.epicode.security.auth;
 
 
 import jakarta.persistence.EntityExistsException;

@@ -1,4 +1,4 @@
-package it.epicode.security.auth.jwt;
+package it.epicode.security.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

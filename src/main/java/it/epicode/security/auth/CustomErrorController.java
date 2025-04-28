@@ -1,4 +1,4 @@
-package it.epicode.security.auth.configs;
+package it.epicode.security.auth;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.ResponseEntity;

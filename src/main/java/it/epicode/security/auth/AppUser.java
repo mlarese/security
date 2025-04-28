@@ -1,4 +1,4 @@
-package it.epicode.security.auth.app_user;
+package it.epicode.security.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

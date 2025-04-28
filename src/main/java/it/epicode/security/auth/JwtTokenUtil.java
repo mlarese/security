@@ -1,4 +1,4 @@
-package it.epicode.security.auth.jwt;
+package it.epicode.security.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,4 +1,4 @@
-package it.epicode.security.auth.exception;
+package it.epicode.security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
